@@ -21,11 +21,11 @@ public class CategorieController {
 
 	@Inject
 	Models models;
-        //Coucou marie ceci est un test
-        
+
 	@GET
 	public void show() {
 		List<Categorie> toutesLesCategories = dao.findAll();
 		models.put("categories", toutesLesCategories);
 	}
+
 }
