@@ -35,7 +35,7 @@
             <label for="client"> Client</label> </br>
 
             <div id="adm1" style="display: none;"><p> Nom : <input name="nom"><br> Mail : <input name="email" type="email"><br></p></div>
-            <div id="cl1" style="display: none;" ><p> Login : <input name="login"><br> Mot de passe : <input name="mdp" type="password"><br></p></div>
+            <div id="cl1" style="display: none;" ><p> Login : <input name="nom"><br> Mot de passe : <input name="email" type="password"><br></p></div>
 
             <input type='submit'>
 
