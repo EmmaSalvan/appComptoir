@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
+import javax.servlet.http.HttpServlet;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -24,8 +25,7 @@ import javax.ws.rs.Path;
 @Path("authentification")
 @View("authentification.jsp")
 
-
-public class AuthentificationController {
+public class AuthentificationController extends HttpServlet {
     
     @Inject // Le DAO généré par netBeans
 	CategorieFacade dao;

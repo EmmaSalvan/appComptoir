@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Authentification</title>
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
             function handleClick(clickedId)
             {
                 if (clickedId == "administrateur"){
@@ -22,12 +22,12 @@
                     document.getElementById('adm1').style.display = "none";
                 }
             }
-        </script>
+        </script>-->
 
     </head>
     <body>
         <h1>Veuillez vous authentifier.</h1>
-        <form method='POST'> 
+        <form method='POST' action="Connect?."> 
             Statut : <br>
             <input type="radio" name="Type" onclick="handleClick(this.id);" id="administrateur" />
             <label for="administrateur"> Administateur</label></br>
