@@ -48,11 +48,11 @@ public class ProfilClientEditorController {
 
     @GET
     public void show() {
-    Client c = dao.find("ALFKI");
-    models.put("client", c);
+            models.put("clients", dao.find("ALFKI"));
     }
+    
 
-   @POST
+    @POST
     @ValidateOnExecution(type = ExecutableType.ALL)
 
     public void modifyClient( 
@@ -63,10 +63,10 @@ public class ProfilClientEditorController {
                 @FormParam("adresse") String adresse,
                 @FormParam("ville") String ville,
                 @FormParam("region") String region,
-                @FormParam("codepostal") Integer codepostal,
+                @FormParam("codepostal") String codepostal,
                 @FormParam("pays") String pays,
-                @FormParam("telephone") Integer telephone,
-                @FormParam("fax") Integer fax) {
+                @FormParam("telephone") String telephone,
+                @FormParam("fax") String fax) {
         if (!formValidationErrors.isFailed()) { // Pas d'erreurs de saisie dans le formulaire
             // On modifie le profil client
             Client nouvelle = dao.find("ALFKI");
@@ -80,15 +80,8 @@ public class ProfilClientEditorController {
             nouvelle.setPays(formData.getPays());
             nouvelle.setTelephone(formData.getTelephone());
             nouvelle.setFax(formData.getFax());
-            // On l'enregistre dans la base
-            try {
-                dao.edit(nouvelle);
-            } catch (EJBException e) {
-                // Erreur possible :
-                Logger.getLogger("Comptoirs").log(Level.INFO, "Echec{0}", e.getLocalizedMessage());
-            }
-        }
-        models.put("validationErrors", formValidationErrors);
-        models.put("client", dao.find("ALFKI"));
-    }
+
+            dao.edit(nouvelle);
+}
+}
 }
