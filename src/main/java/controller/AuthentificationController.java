@@ -9,12 +9,20 @@ import comptoirs.model.dao.CategorieFacade;
 import comptoirs.model.dao.ClientFacade;
 import comptoirs.model.entity.Categorie;
 import comptoirs.model.entity.Client;
+import comptoirs.model.entity.ClientConnecte;
+import java.io.IOException;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.executable.ExecutableType;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -30,39 +38,44 @@ import javax.ws.rs.Path;
 @Path("authentification")
 @View("authentification.jsp")
 
-public class AuthentificationController{
+public class AuthentificationController {
     
-    @Inject // Le DAO généré par netBeans
-	ClientFacade dao;
+    @Inject //recupère les infos de la db
+    ClientFacade dao;
 
-	@Inject
-	Models models;
+    @Inject
+    Models models;
 
-        @Inject
-        SessionClientController client;
-        
-	@GET
-	public void show() {
-		models.put("client", dao.findAll());
-	}
-        
-        @POST
-        @ValidationOnExecution(type = ExecutableType.ALL)
-        public String login(@FormParam("nom") String nom, @FormParam("email") String email){
-            if (nom.equals("admin") && email.equals("mdp")){
-                return "Coucou je suis un admin";
-            } else {
-                try {
-                    Client p = dao.find(nom);
+    @Inject // Les infos du joueur, Session scoped
+    private ClientConnecte client;
+
+    @GET
+    public void show() {
+        models.put("client", dao.findAll());
+    }
+
+    @POST
+    public String login(@FormParam("contact") String nom, @FormParam("motDePasse") String code) {
+        if (nom.equals("admin") && code.equals("mdp")) {
+            models.put("errorMessage", "Tout est bon pour l'admin");
+        } else {
+            try {
+                Client p = dao.find(code);
+                if (p.getCode().equals(code)) {
                     if (p.getContact().equals(nom)) {
-                        client.setCode(email);
+                        client.login(code);
+                        return "redirect:acceuil";
                     } else {
-                        models.put("databaseErrorMessage", "Ce conctat ne correspond pas au client");
+                        models.put("errorMessage", "Le mdp ne correspond pas au client");
                     }
-                } catch (Exception e){
-                    models.put("databaseErrorMessage","Ce code n'existe pas.");
+                } else {
+                    models.put("errorMessage", "Ce contact n'existe pas.");
                 }
+            } catch (Exception e) {
+                models.put("errorMessage", "Erreur de connexion.");
             }
-            return null;
         }
+        return null;
+    }
+
 }

@@ -121,11 +121,11 @@ public class ClientForm implements Serializable {
 		this.region = region;
 	}
 
-        public String getCodePostal() {
+        public int getCodePostal() {
 		return codepostal;
 	}
 
-	public void setCodePostal(final String codepostal) {
+	public void setCodePostal(final int codepostal) {
 		this.codepostal = codepostal;
 	}
 
@@ -137,19 +137,19 @@ public class ClientForm implements Serializable {
 		this.pays = pays;
 	}
 
-        public String getTelephone() {
+        public int getTelephone() {
 		return telephone;
 	}
 
-	public void setTelephone(final String telephone) {
+	public void setTelephone(final int telephone) {
 		this.telephone = telephone;
 	}
 
-        public String getFax() {
+        public int getFax() {
 		return fax;
 	}
 
-	public void setFax(final String fax) {
+	public void setFax(final int fax) {
 		this.fax = fax;
 	}
 }

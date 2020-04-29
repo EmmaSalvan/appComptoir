@@ -106,6 +106,6 @@
             <input type="submit" value="Modifier le profil">
         </form>
                 
-        <a href="${pageContext.request.contextPath}/">Retour au menu</a>
+        <a href="${pageContext.request.contextPath}/acceuil">Retour au menu</a>
     </body>
 </html>

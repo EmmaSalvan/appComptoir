@@ -215,5 +215,22 @@ public class Client implements Serializable {
 	public String toString() {
 		return "comptoirs.model.entity.Client[ code=" + code + " ]";
 	}
+
+    public Client(String code, String societe, String contact, String fonction, String adresse, String ville, String region, String codePostal, String pays, String telephone, String fax, Collection<Commande> commandeCollection) {
+        this.code = code;
+        this.societe = societe;
+        this.contact = contact;
+        this.fonction = fonction;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.region = region;
+        this.codePostal = codePostal;
+        this.pays = pays;
+        this.telephone = telephone;
+        this.fax = fax;
+        this.commandeCollection = commandeCollection;
+    }
+        
+    
 	
 }

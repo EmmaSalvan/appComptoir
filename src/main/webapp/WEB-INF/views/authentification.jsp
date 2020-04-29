@@ -7,42 +7,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Authentification</title>
-<!--        <script type="text/javascript">
-            function handleClick(clickedId)
-            {
-                if (clickedId == "administrateur"){
-                    document.getElementById('adm1').style.display = "block";
-                    document.getElementById('cl1').style.display = "none";
-                } else {
-                    document.getElementById('cl1').style.display = "block";
-                    document.getElementById('adm1').style.display = "none";
-                }
-            }
-        </script>-->
+<html lang="fr">
 
-    </head>
-    <body>
-        <h1>Veuillez vous authentifier.</h1>
-        <form method='POST' action="Connect?."> 
-            Statut : <br>
-            <input type="radio" name="Type" onclick="handleClick(this.id);" id="administrateur" />
-            <label for="administrateur"> Administateur</label></br>
-            <input type="radio" name="Type" onclick="handleClick(this.id);" id="client" />
-            <label for="client"> Client</label> </br>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Connexion</title>
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+</head>
+<body class="text-center">
 
-            <div id="adm1" style="display: none;"><p> Nom : <input name="nom"><br> Mail : <input name="email" type="email"><br></p></div>
-            <div id="cl1" style="display: none;" ><p> Login : <input name="nom"><br> Mot de passe : <input name="email" type="password"><br></p></div>
-
-            <input type='submit'>
-
-            </div>
-        </form>
-
-        <a href="${pageContext.request.contextPath}/">Retour au menu</a>
-    </body>
+    <form class="form-signin"  method="POST">
+        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+        <label for="inputEmail" class="sr-only">Login</label>
+        <input type="string" name="contact" id="inputEmail" class="form-control" placeholder="Contact" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input type="password" name="motDePasse" id="inputPassword" class="form-control" placeholder="Mot de passe" required="">
+        <div id="messageErreur">
+            <p>${errorMessage}</p>
+        </div>
+        <input class="btn btn-lg btn-connexion btn-block" type="submit" placeholder="Se Connecter">
+        <p class="mt-4 mb-3 text-muted">© Projet Technologies Web</p>
+    </form>
+        
+</body>
 
 </html>
