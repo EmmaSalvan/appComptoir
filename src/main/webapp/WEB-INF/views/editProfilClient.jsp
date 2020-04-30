@@ -17,17 +17,17 @@
         <table border='1'>
 		<tr><th>Code</th><th>Societe</th><th>Contact</th><th>Fonction</th><th>Adresse</th><th>Ville</th><th>Region</th><th>CodePostal</th><th>Pays</th><th>Telephone</th><th>Fax</th></tr>
 			<tr>
-				<td>${client.code}</td>
-				<td>${mvc.encoders.html(client.societe)}</td>
-				<td>${mvc.encoders.html(client.contact)}</td>
-                                <td>${mvc.encoders.html(client.fonction)}</td>
-                                <td>${mvc.encoders.html(client.adresse)}</td>
-                                <td>${mvc.encoders.html(client.ville)}</td>
-                                <td>${mvc.encoders.html(client.region)}</td>
-                                <td>${mvc.encoders.html(client.codepostal)}</td>
-                                <td>${mvc.encoders.html(client.pays)}</td>
-                                <td>${mvc.encoders.html(client.telephone)}</td>
-                                <td>${mvc.encoders.html(client.fax)}</td>
+				<td>${clients.code}</td>
+				<td>${mvc.encoders.html(clients.societe)}</td>
+				<td>${mvc.encoders.html(clients.contact)}</td>
+                                <td>${mvc.encoders.html(clients.fonction)}</td>
+                                <td>${mvc.encoders.html(clients.adresse)}</td>
+                                <td>${mvc.encoders.html(clients.ville)}</td>
+                                <td>${mvc.encoders.html(clients.region)}</td>
+                                <td>${mvc.encoders.html(clients.codepostal)}</td>
+                                <td>${mvc.encoders.html(clients.pays)}</td>
+                                <td>${mvc.encoders.html(clients.telephone)}</td>
+                                <td>${mvc.encoders.html(clients.fax)}</td>
 			</tr>
 	</table>
         
