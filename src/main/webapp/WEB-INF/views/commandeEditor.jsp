@@ -5,31 +5,65 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> Edition des commandes </title>
-    </head>
-    <body>
-        <h1> Edition des commandes </h1>
-        
-        <form method="POST">
-            
-            <input name=" " placeholder=" "><br>
-                <ul> 
-                        <c:forEach var="error" items="${validationErrors.getErrors('libelle')}">
-                                <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                        </c:forEach>
-                </ul>
 
-                <input name=" " placeholder=" "><br>
-                <ul> 
-                        <c:forEach var="error" items="${validationErrors.getErrors('description')}">
-                                <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                        </c:forEach>
-                </ul>
-                <input type="submit" value="ajouter une nouvelle commande">
-        </form>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Produits dans la catégorie '${selected.libelle}'</title>
+	</head>
+
+	<body>
+		<h3>Choisissez la catégorie à afficher</h3>
+		<form> 	<%-- L'action par défaut est de revenir à l'URL du contrôleur --%>
+			<%-- Une liste de choix pour le paramètre 'code' --%>
+			<select name='code' onchange='this.form.submit()'>
+				<%-- On parcourt la liste des catégories en mettant une option pour chaque catégorie --%>
+				<c:forEach var="categorie" items="${categories}">
+					<%-- la valeur de l'option c'est le code de la catégorie --%>
+					<option value='${categorie.code}' 
+						<%--On détermine quelle et l'option sélectionnée dans la liste --%>
+						<c:if test="${categorie.code eq selected.code}">
+							selected
+						</c:if>
+					> <%-- le texte affiché pour l'opton c'est le libellé de la catégorie --%>
+						${categorie.libelle}
+					</option>
+				</c:forEach>
+			</select>
+			<input type='submit'>
+		</form>
+                <form>               
+		<h2>Produits dans la catégorie '${selected.libelle}'</h2>
+		<%-- On montre la liste des produits dans la catégorie sélectionnée sous la forme d'une table HTML --%>		
+		<table border='1'>
+			<tr><th>Référence</th><th>Nom</th><th>Disponible ?</th></tr>
+			<%-- Est-ce qu'il y a des produits dans la catégorie sélectionnée ? --%>
+			<c:if test="${empty selected.produitCollection}">
+				<tr><td colspan="3">aucun produit dans cette catégorie</td></tr>	
+			</c:if>
+			<%-- Une ligne dans la table pour chaque produit --%>				
+			<c:forEach var="produit" items="${selected.produitCollection}">
+				<tr>
+					<td>${produit.reference}</td>
+					<td>${produit.nom}</td>
+					<td>
+						<input type="checkbox"
+						       <c:if test="${produit.indisponible eq 0}">checked</c:if>
+						>
+					</td>
+                                        <td>${produit.prix}</td>
+                                        <td>Quantité:  <input name="Quantité" type="number" min="0.00" max="20.00" step="1" /></td>
+             
+				</tr>
+			</c:forEach>
+		</table>
+		<hr>
+                <input type='submit' value="commander">
+                 </form>   
+		<a href="${pageContext.request.contextPath}/">Retour au menu</a>
+	<hr>
     </body>
 </html>

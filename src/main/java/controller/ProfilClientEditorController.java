@@ -67,13 +67,14 @@ public class ProfilClientEditorController {
             nouvelle.setFonction(fonction);
             nouvelle.setAdresse(adresse);
             nouvelle.setVille(ville);
-            nouvelle.setRegion(ville);
-            nouvelle.setCodePostal(codePostal);
+            nouvelle.setRegion(region);
+            nouvelle.setCodePostal(codepostal);
             nouvelle.setPays(pays);
             nouvelle.setTelephone(telephone);
             nouvelle.setFax(fax);
 
             dao.edit(nouvelle);
+            models.put("clients", dao.find("BOTTM"));
     }
 }
  
