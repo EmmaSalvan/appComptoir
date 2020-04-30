@@ -20,7 +20,7 @@
 </head>
 <body class="text-center">
 
-    <form class="form-signin"  method="POST">
+    <form class="form-signin" method="POST">
         <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
         <label for="inputEmail" class="sr-only">Login</label>
         <input type="string" name="contact" id="inputEmail" class="form-control" placeholder="Contact" required="" autofocus="">

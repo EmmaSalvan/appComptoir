@@ -39,7 +39,7 @@ import javax.ws.rs.Path;
 @View("authentification.jsp")
 
 public class AuthentificationController {
-    
+
     @Inject //recupère les infos de la db
     ClientFacade dao;
 
@@ -47,12 +47,29 @@ public class AuthentificationController {
     Models models;
 
     @Inject // Les infos du joueur, Session scoped
-    private ClientConnecte client;
+    ClientConnecte client;
 
+//    @GET
+//    public String show() {
+//        models.put("client", dao.findAll());
+//        if (client.getCode() == null) { // Pas de code donc pas authentifier Partie client
+//            return "authentification.jsp";
+//        } //else { // Code donc authentifier Partie client
+//            //return "acceuil.jsp";
+//        //}
+//        return "acceuil.jsp";
+//    }
+    
     @GET
-    public void show() {
-        models.put("client", dao.findAll());
+     public void show() {
+         models.put("client", dao.findAll());
     }
+//    @GET
+//    @Path("deconnecter")
+//    public String logout() {
+//        client.logout();
+//        return "redirect:/";
+//    }
 
     @POST
     public String login(@FormParam("contact") String nom, @FormParam("motDePasse") String code) {
@@ -63,19 +80,24 @@ public class AuthentificationController {
                 Client p = dao.find(code);
                 if (p.getCode().equals(code)) {
                     if (p.getContact().equals(nom)) {
-                        client.login(code);
+                        client.login(code,nom);
                         return "redirect:acceuil";
                     } else {
-                        models.put("errorMessage", "Le mdp ne correspond pas au client");
+                        models.put("errorMessage", "Les informations de connexion sont érronnées.");
                     }
                 } else {
                     models.put("errorMessage", "Ce contact n'existe pas.");
                 }
             } catch (Exception e) {
-                models.put("errorMessage", "Erreur de connexion.");
+                models.put("errorMessage", "Le mot de passe est incorrect.");
             }
         }
         return null;
     }
-
+//    
+//    @GET @Path("acceuil")
+//    public String getNom() {
+//        models.put("client", client.getCode());
+//        return null;
+//    }
 }

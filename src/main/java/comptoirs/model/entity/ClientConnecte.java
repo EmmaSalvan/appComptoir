@@ -19,14 +19,24 @@ import javax.ws.rs.Produces;
 @Named("client")
 public class ClientConnecte implements Serializable {
 
-    private String Code;
+    private String Code = null;
+    private String Nom;
+    
+    public ClientConnecte() {
+    }
 
-    public void login(String Code) {
+    public void login(String Code, String Nom) {
         this.Code = Code;
+        this.Nom = Nom;
+    }
+
+    public String getNom() {
+        return Nom;
     }
 
     public void logout() {
         this.Code = null;
+        this.Nom = null;
     }
 
     public String getCode() {

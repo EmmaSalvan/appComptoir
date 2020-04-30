@@ -48,7 +48,7 @@
     <main role="main" class="my-auto">
         <div class="container">
             <div class="starter-template text-center">
-                <h1 class="mt-5">Bienvenue sur votre site de commerce électronique</h1>
+                <h1 class="mt-5">Bienvenue ${client.nom} sur RoseMarket !</h1>
                 <p class="lead">A partir de cette page, vous pouvez :</p>
                 <ul class="liste">
                     <li>
