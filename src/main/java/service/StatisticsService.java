@@ -1,9 +1,10 @@
 package service;
 
-import comptoirs.model.dao.StatisticsDao;
-import comptoirs.model.dto.StatsResult;
+import comptoirs.model.dao.CaDao;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import javax.persistence.Query;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,26 +15,34 @@ import javax.ws.rs.core.MediaType;
 
 @Path("service/unitesVendues")
 public class StatisticsService {
-
-	@Inject
-	StatisticsDao dao;
+        
+        @Inject
+	CaDao cadao;
+        
 	
-	@GET @Path("categories")
-	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public List<StatsResult> unitesVenduesJSON() {
-		return dao.unitesVenduesParCategorieDTO();
-	}
-	
-	@GET @Path("produits")
+        
+        @GET @Path("CAcategories")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<StatsResult> produitsVendus(@QueryParam("code") Integer codeCategorie) {
-		return dao.produitsVendusPour(codeCategorie);
-	}	
-
-	@GET @Path("vector")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List unitesVenduesParCategorie() {
-		List result = dao.unitesVenduesParCategorie();
-		return result;
+	public List CAParCategorie(@QueryParam("from") Long timestampFrom,@QueryParam("to") Long timestampTo) {
+		if(timestampFrom!=null && timestampTo!=null)
+			return cadao.caParCategorie(new Date(timestampFrom), new Date(timestampTo));
+		return cadao.caParCategorie();
 	}
+        
+        @GET @Path("CAclient")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List CAParClient(@QueryParam("from") Long timestampFrom,@QueryParam("to") Long timestampTo) {
+		if(timestampFrom!=null && timestampTo!=null)
+			return cadao.caParClient(new Date(timestampFrom), new Date(timestampTo));
+		return cadao.caParClient();
+	}
+        
+        @GET @Path("CApays")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List CAParPays(@QueryParam("from") Long timestampFrom,@QueryParam("to") Long timestampTo) {
+		if(timestampFrom!=null && timestampTo!=null)
+			return cadao.caParPays(new Date(timestampFrom), new Date(timestampTo));
+		return cadao.caParPays();
+	}
+       
 }

@@ -23,8 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
 	@NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c"),
 	@NamedQuery(name = "Categorie.findByCode", query = "SELECT c FROM Categorie c WHERE c.code = :code"),
 	@NamedQuery(name = "Categorie.findByLibelle", query = "SELECT c FROM Categorie c WHERE c.libelle = :libelle"),
-	@NamedQuery(name = "Categorie.findByDescription", query = "SELECT c FROM Categorie c WHERE c.description = :description")
-})
+	@NamedQuery(name = "Categorie.findByDescription", query = "SELECT c FROM Categorie c WHERE c.description = :description"),
+        @NamedQuery(name = "Categorie.CAParCategorie", query = "SELECT cat.libelle, SUM(li.quantite*p.prixUnitaire) FROM Categorie cat LEFT JOIN cat.produitCollection p LEFT JOIN p.ligneCollection li LEFT JOIN li.commande1 co GROUP BY cat.libelle" ),
+	@NamedQuery(name = "Categorie.CAParCategorieParTemps", query = "SELECT cat.libelle, SUM(li.quantite*p.prixUnitaire) FROM Categorie cat LEFT JOIN cat.produitCollection p LEFT JOIN p.ligneCollection li LEFT JOIN li.commande1 co WHERE co.saisieLe > :from AND co.saisieLe < :to GROUP BY cat.libelle" )}        
+)
+
 public class Categorie implements Serializable {
 
 	private static final long serialVersionUID = 1L;

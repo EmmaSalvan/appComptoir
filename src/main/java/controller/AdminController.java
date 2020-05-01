@@ -5,14 +5,17 @@
  */
 package controller;
 
+import comptoirs.model.dao.CaDao;
+import comptoirs.model.dao.CategorieFacade;
 import comptoirs.model.dao.ClientFacade;
-import comptoirs.model.entity.ClientConnecte;
+import comptoirs.model.dao.ProduitFacade;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -24,18 +27,24 @@ import javax.ws.rs.Path;
 @View("admin.jsp")
 
 public class AdminController {
-    @Inject //recupère les infos de la db
-    ClientFacade dao;
-        
-    @Inject
-    Models models;
-    
-    @Inject // Les infos du joueur, Session scoped
-    private ClientConnecte client;
-    
-    @GET
-    public void show() {
-        //String p = dao.find(client.getCode()).getContact();
-	models.put("client", "Coucou");
-    }
+        @Inject
+	CategorieFacade categorieDao;
+
+	@Inject
+	ProduitFacade produitDao;
+	
+	@Inject
+	CaDao statisticsDao;
+	
+	@Inject
+	Models models;
+	
+	@GET
+	public void show() {
+		
+		models.put("firstAndLastOrderDate", statisticsDao.getFirstAndLastOrderDate());
+		models.put("produits", produitDao.findAll());
+		models.put("categories", categorieDao.findAll());
+		
+	}
 }

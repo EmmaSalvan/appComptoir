@@ -1,6 +1,6 @@
 <%-- 
     Document   : admin
-    Created on : 30 avr. 2020, 19:31:19
+    Created on : 1 mai 2020, 01:22:25
     Author     : marisolcanavy
 --%>
 
@@ -14,50 +14,53 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Connexion</title>
+        <title>DashBoard Administrateur</title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-        <!-- On charge JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <!-- On charge l'API Google -->
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
 
-            google.charts.load('current', {'packages': ['corechart']});
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!-- On charge JQuery 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+        <!-- On charge l'API Google 
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <!--<script type="text/javascript">
+            google.charts.load('current', {'packages': ['bar']});
             // On fait l'appel AJAX dès le chargement de la page
             google.charts.setOnLoadCallback(doAjax);
 
             function drawPiechart(result) {
                 // On met le résultat au format attendu par google
-                var data = [['Produit', 'Unités vendues']];
-                result.forEach(ligne => data.push([ligne.libelle, ligne.unites]));
+                var data = [['Catégorie', 'Chiffre d\'affaire']];
+                result.forEach(ligne => data.push([ligne.libelle, ligne.prix]));
                 var dataTable = google.visualization.arrayToDataTable(data);
+
                 var options = {
-                    titlePosition: 'none',
-                    pieHole: 0.4,
-                    colors: ['#d4dcdc', '#e7d8c9', '#b2967d', '#f9c6c9', '#e29578'],
-                    pieSliceTextStyle: {color: 'black'},
-                    legend: {position: 'bottom', textStyle: {color: 'black'}},
-                    backgroundColor: {fill: '#eee4e1'},
-                    width: 340,
-                    height: 300,
+                    colors: ['#b2967d'],
+                    legend: {position: 'none'},
+                    backgroundColor: {
+                        fill: '#eee4e1',
+                        fillOpacity: 0.8
+                    },
+                    width: 1140,
+                    height: 600
                 };
 
-                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                chart.draw(data, options);
+                var chart = new google.charts.Bar(document.getElementById('donutchart'));
+                chart.draw(dataTable, options);
 
-                //var chart = new google.visualization.PieChart(document.getElementById('donutchart1'));
-                //chart.draw(data, options);
-                //var chart = new google.visualization.PieChart(document.getElementById('donutchart2'));
-                //chart.draw(data, options);
+                var chart = new google.charts.Bar(document.getElementById('donutchart1'));
+                chart.draw(dataTable, options);
+                var chart = new google.charts.Bar(document.getElementById('donutchart2'));
+                chart.draw(dataTable, options);
 
             }
 
             // Afficher les ventes par catégorie
             function doAjax() {
                 $.ajax({
-                    url: "mvc/service/unitesVendues/categories",
+                    url: "mvc/service/unitesVendues/CAcategories",
                     dataType: "json",
                     success: drawPiechart, // La fonction qui traite les résultats
                     error: showError
@@ -69,7 +72,7 @@
                 alert("Erreur: " + status + " : " + message);
             }
 
-        </script>
+        </script>-->
     </head>
 
     <body class="d-flex flex-column h-100">
@@ -102,40 +105,40 @@
                     <div class="col text-right">
                         <p class="lead">En spécifiant la période ci-après :</p>
                     </div>
-                    <div class="col text-left">
-                        <div>
-                            <form
-                                style="max-width: 250px; background-color: rgb(238, 228, 225); padding-left: 30px; padding-right: 30px; padding-top: 0px; padding-bottom: 10px;">
-                                <label for="dateDeb" class="sr-only">Date de début</label>
-                                <input type="date" id="dateDeb" class="form-control" placeholder="01/01/2010" required=""
-                                       autofocus="">
-                                <label for="dateFin" class="sr-only">Date de fin</label>
-                                <input type="date" id="dateFin" class="form-control" placeholder="01/01/2012" required="">
-                                <div id="messageErreur">
-                                    <p>${errorMessage}</p>
-                                </div>
-                                <button class="btn btn-lg btn-connexion btn-block" type="submit">Se connecter</button>
-                            </form>
+                    <div class="col text-left set-option"">
+                        <div class="date-range-tool" style="max-width: 250px; background-color: rgb(238, 228, 225); padding-left: 30px; padding-right: 30px; padding-top: 0px; padding-bottom: 10px;">
+                            <div class="date-picker-group"> 
+                                <label for="from" class="sr-only">Date de début</label>
+                                <input type="date" id="from" name="from" class="form-control" >
+                                <label for="to" class="sr-only">Date de fin</label>
+                                <input type="date" id="to" name="to" class="form-control"></div>
+                            <div id="slider-range"></div>
+                            <div id="messageErreur">
+                                <p id="messageErreur"></p>
+                            </div>
+                            <!--<button class="btn btn-lg btn-connexion btn-block">Afficher</button>-->
+
                         </div>
                     </div>
                 </div>
             </div>
             <div>
                 <p class="lead text-center" style="background-color: #e29578; padding: 5px;">Voici les résultats sur la
-                    période de Juin à Juillet 2020.</p>
+                    période demandé : </p>
             </div>
+
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="text-center lead" style="transform: translateY(20px);">CA par catégorie de produits</p>
+                        <p class="text-center lead">CA par catégorie de produits</p>
                         <div id="donutchart"></div>
                     </div>
                     <div class="col">
-                        <p class="text-center lead " style="transform: translateY(20px);">CA par pays</p>
+                        <p class="text-center lead">CA par pays</p>
                         <div id="donutchart1"></div>
                     </div>
                     <div class="col">
-                        <p class="text-center lead" style="transform: translateY(20px);">CA par client</p>
+                        <p class="text-center lead">CA par client</p>
                         <div id="donutchart2"></div>
                     </div>
                 </div>
@@ -149,5 +152,77 @@
     </footer>
 
 </body>
+<script>
+    $("#slider-range").slider({
+    range: true,
+            min: ${firstAndLastOrderDate[0]},
+            max: ${firstAndLastOrderDate[1]},
+            values: [${firstAndLastOrderDate[0]}, ${firstAndLastOrderDate[1]}],
+            create: function (event, ui) {
+            let from = new Date(${firstAndLastOrderDate[0]});
+            let to = new Date(${firstAndLastOrderDate[1]});
+            $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
+            $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
+            },
+            slide: function (event, ui) {
+            from = new Date(ui.values[0]);
+            to = new Date(ui.values[1]);
+            $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
+            $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
+            },
+            stop: function (event, ui) {
+            drawGraph(ui.values[0], ui.values[1]);
+            }
+    });
+    $("#from").change(manualDateChangeHandler);
+    $("#to").change(manualDateChangeHandler);
+    google.charts.load('current', {packages: ['bar']});
+    google.charts.setOnLoadCallback(drawGraph);
+    function manualDateChangeHandler() {
+    let from = new Date($("#from").val());
+    let to = new Date($("#to").val());
+    $("#slider-range").slider('values', 0, from.getTime());
+    $("#slider-range").slider('values', 1, to.getTime());
+    }
 
+    function drawGraph(from = null, to = null) {
+    var data = await fetch("${pageContext.request.contextPath}/toto/mvc/service/unitesVendues/CAcategories" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+    return data.json();
+    }).then(json => {
+    json.unshift(['Catégories', "Chiffre d\'affaire", ]);
+    console.log(json);
+    return google.visualization.arrayToDataTable(json);
+    });
+    var options = {
+    colors: ['#b2967d'],
+            legend: {position: 'none'},
+            backgroundColor: {
+            fill: '#eee4e1',
+                    fillOpacity: 0.8
+            },
+            width: 1140,
+            height: 600
+    };
+    var chart = new google.charts.Bar(document.getElementById('donutchart'));
+    chart.draw(data, options);
+    data = await fetch("${pageContext.request.contextPath}/toto/mvc/service/unitesVendues/CApays" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+    return data.json();
+    }).then(json => {
+    json.unshift(['Pays', "Chiffre d\'affaire", ]);
+    console.log(json);
+    return google.visualization.arrayToDataTable(json);
+    });
+    var chart = new google.charts.Bar(document.getElementById('donutchart1'));
+    chart.draw(data, options);
+    data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAclient" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+    return data.json();
+    }).then(json => {
+    json.unshift(['Clients', "Chiffre d\'affaire", ]);
+    console.log(json);
+    return google.visualization.arrayToDataTable(json);
+    });
+    var chart = new google.charts.Bar(document.getElementById('donutchart2'));
+    chart.draw(data, options);
+    }
+</script>
 </html>
