@@ -10,36 +10,31 @@ package comptoirs.model.entity;
  * @author marisolcanavy
  */
 import java.io.Serializable;
-import java.util.Collection;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.ws.rs.Produces;
+
+
 
 @SessionScoped
 @Named("client")
-public class ClientConnecte implements Serializable {
+public class ClientConnecte extends Client implements Serializable {
 
-    private String Code = null;
-    private String Nom;
-    
-    public ClientConnecte() {
+    private Client c;
+
+    public void login(Client c) {
+        this.c = c;
     }
-
-    public void login(String Code, String Nom) {
-        this.Code = Code;
-        this.Nom = Nom;
+    
+    public void logout() {
+         this.c = null;
     }
 
     public String getNom() {
-        return Nom;
+        return c.getContact();
     }
 
-    public void logout() {
-        this.Code = null;
-        this.Nom = null;
+    public Client getC() {
+        return c;
     }
-
-    public String getCode() {
-        return Code;
-    }
+    
 }

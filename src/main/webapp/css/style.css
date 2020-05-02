@@ -61,6 +61,9 @@ body {
 .bgMr{
     background-color: #e6beae;
 }
+#messageErreur{
+    display: none;
+}
 
 .r{
     color: inherit;
@@ -109,7 +112,7 @@ ul.liste >    li::before {
     position: relative;
     padding: 15px 0 0;
     margin-top: 10px;
-    width: 50%;
+    width: 100%;
 }
   
   .form__field {
@@ -137,9 +140,10 @@ ul.liste >    li::before {
   
   
   .form__label {
+    padding: 7px;
     position: absolute;
     top: 0;
-    display: block;
+    display: none;
     transition: 0.2s;
     font-size: 1rem;
     color: #b2967d;
@@ -156,7 +160,7 @@ ul.liste >    li::before {
 
   .form__field:focus~ .form__label {
     position: absolute;
-    top: -8px;
+    top: -30px;
     display: block;
     transition: 0.2s;
     font-size: 1rem;

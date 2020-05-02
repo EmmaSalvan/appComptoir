@@ -143,7 +143,7 @@ public class Client implements Serializable {
 	}
 
 	public String getRegion() {
-		return region;
+            return region;
 	}
 
 	public void setRegion(String region) {

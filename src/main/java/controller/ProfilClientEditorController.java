@@ -16,6 +16,8 @@ import javax.mvc.Models;
 import javax.mvc.View;
 import javax.mvc.binding.BindingResult;
 import javax.validation.Valid;
+import javax.validation.executable.ExecutableType;
+import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,46 +35,41 @@ import javax.ws.rs.BeanParam;
 
 public class ProfilClientEditorController {
 
-    @Inject
+    @Inject //recupère les infos de la db
     ClientFacade dao;
 
     @Inject
     Models models;
 
     @Inject // Les infos du joueur, Session scoped
-    private ClientConnecte client;
+    ClientConnecte client;
 
     @GET
     public void show() {
-        models.put("clients", dao.find("BOTTM"));
+        models.put("client", dao.find(client.getCode()));
     }
 
     @POST
-    public void edit(
-            @FormParam("societe") String societe,
-            @FormParam("contact") String contact,
-            @FormParam("fonction") String fonction,
-            @FormParam("adresse") String adresse,
-            @FormParam("ville") String ville,
-            @FormParam("region") String region,
-            @FormParam("codepostal") String codepostal,
-            @FormParam("pays") String pays,
-            @FormParam("telephone") String telephone,
-            @FormParam("fax") String fax) {
-
-        Client nouvelle = dao.find("BOTTM");
-        nouvelle.setSociete(societe);
-        nouvelle.setContact(contact);
-        nouvelle.setFonction(fonction);
-        nouvelle.setAdresse(adresse);
-        nouvelle.setVille(ville);
-        nouvelle.setRegion(region);
-        nouvelle.setCodePostal(codepostal);
-        nouvelle.setPays(pays);
-        nouvelle.setTelephone(telephone);
-        nouvelle.setFax(fax);
-
-        dao.edit(nouvelle);
-        models.put("clients", dao.find("BOTTM"));
+    @ValidateOnExecution(type = ExecutableType.ALL)	
+    public void editProfil(@FormParam("societe") String societe, @FormParam("fonction") String fonction, @FormParam("adresse") String adresse, @FormParam("ville") String ville, @FormParam("region") String region, @FormParam("codepostal") String codePostal, @FormParam("pays") String pays, @FormParam("telephone") String telephone, @FormParam("fax") String fax) {
+        models.put("changement", "Voici le changement de societe souhaité :" + societe + "et" + fonction+ "et" + adresse+ "et" + ville+ "et" + codePostal+ "et" + region+ "et" + pays+ "et" + telephone+ "et" + fax);
+       
+        Client profilConnecte = dao.find(client.getCode());
+        
+        profilConnecte.setSociete(societe);
+        profilConnecte.setFonction(fonction);
+        profilConnecte.setAdresse(adresse);
+        profilConnecte.setVille(ville);
+        profilConnecte.setCodePostal(codePostal);
+        profilConnecte.setRegion(region);
+        profilConnecte.setPays(pays);
+        profilConnecte.setTelephone(telephone);
+        profilConnecte.setFax(fax);
+        
+        
+        dao.edit(profilConnecte);
+        profilConnecte = dao.find(client.getCode());
+        models.put("client.c", profilConnecte);
     }
+
 }

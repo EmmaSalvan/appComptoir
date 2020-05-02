@@ -19,8 +19,6 @@ public class StatisticsService {
         @Inject
 	CaDao cadao;
         
-	
-        
         @GET @Path("CAcategories")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List CAParCategorie(@QueryParam("from") Long timestampFrom,@QueryParam("to") Long timestampTo) {

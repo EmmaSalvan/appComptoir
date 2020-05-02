@@ -20,11 +20,90 @@
 
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <!-- On charge JQuery 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
-        <!-- On charge l'API Google 
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+        <!-- On charge JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- On charge l'API Google-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            console.log(5 + 6);
+            $("#slider-range").slider({
+            range: true,
+                    min: ${firstAndLastOrderDate[0]},
+                    max: ${firstAndLastOrderDate[1]},
+                    values: [${firstAndLastOrderDate[0]}, ${firstAndLastOrderDate[1]}],
+                    create: function (event, ui) {
+                    let from = new Date(${firstAndLastOrderDate[0]});
+                    let to = new Date(${firstAndLastOrderDate[1]});
+                    $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
+                    $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
+                    },
+                    slide: function (event, ui) {
+                    from = new Date(ui.values[0]);
+                    to = new Date(ui.values[1]);
+                    $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
+                    $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
+                    },
+                    stop: function (event, ui) {
+                    drawGraph(ui.values[0], ui.values[1]);
+                    }
+            });
+            
+            $("#from").change(manualDateChangeHandler);
+            $("#to").change(manualDateChangeHandler);
+            google.charts.load('current', {packages: ['bar']});
+            google.charts.setOnLoadCallback(drawGraph);
+            function manualDateChangeHandler() {
+            let from = new Date($("#from").val());
+            let to = new Date($("#to").val());
+            $("#slider-range").slider('values', 0, from.getTime());
+            $("#slider-range").slider('values', 1, to.getTime());
+            }
+
+            function drawGraph(from = null, to = null) {
+                
+                //methoàde Lucas
+            var data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAcategories" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            return data.json();
+            }).then(json => {
+            json.unshift(['Catégories', "Chiffre d\'affaire", ]);
+            console.log(json);
+            return google.visualization.arrayToDataTable(json);
+            });
+            var options = {
+            colors: ['#b2967d'],
+                    legend: {position: 'none'},
+                    backgroundColor: {
+                    fill: '#eee4e1',
+                            fillOpacity: 0.8
+                    },
+                    width: 1140,
+                    height: 600
+            };
+            var chart = new google.charts.Bar(document.getElementById('donutchart'));
+            chart.draw(data, options);
+           
+            //suite
+            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CApays" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            return data.json();
+            }).then(json => {
+            json.unshift(['Pays', "Chiffre d\'affaire", ]);
+            console.log(json);
+            return google.visualization.arrayToDataTable(json);
+            });
+            var chart = new google.charts.Bar(document.getElementById('donutchart1'));
+            chart.draw(data, options);
+            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAclient" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            return data.json();
+            }).then(json => {
+            json.unshift(['Clients', "Chiffre d\'affaire", ]);
+            console.log(json);
+            return google.visualization.arrayToDataTable(json);
+            });
+            var chart = new google.charts.Bar(document.getElementById('donutchart2'));
+            chart.draw(data, options);
+            }
+        </script>
         <!--<script type="text/javascript">
             google.charts.load('current', {'packages': ['bar']});
             // On fait l'appel AJAX dès le chargement de la page
@@ -105,16 +184,16 @@
                     <div class="col text-right">
                         <p class="lead">En spécifiant la période ci-après :</p>
                     </div>
-                    <div class="col text-left set-option"">
+                    <div class="col text-left set-option">
                         <div class="date-range-tool" style="max-width: 250px; background-color: rgb(238, 228, 225); padding-left: 30px; padding-right: 30px; padding-top: 0px; padding-bottom: 10px;">
                             <div class="date-picker-group"> 
-                                <label for="from" class="sr-only">Date de début</label>
+                                <!--<label for="from" class="sr-only">Date de début</label>-->
                                 <input type="date" id="from" name="from" class="form-control" >
-                                <label for="to" class="sr-only">Date de fin</label>
+                                <!--<label for="to" class="sr-only">Date de fin</label>-->
                                 <input type="date" id="to" name="to" class="form-control"></div>
                             <div id="slider-range"></div>
-                            <div id="messageErreur">
-                                <p id="messageErreur"></p>
+                            <div id="messageErreur"><p id="messageErreur"></p>
+
                             </div>
                             <!--<button class="btn btn-lg btn-connexion btn-block">Afficher</button>-->
 
@@ -152,77 +231,4 @@
     </footer>
 
 </body>
-<script>
-    $("#slider-range").slider({
-    range: true,
-            min: ${firstAndLastOrderDate[0]},
-            max: ${firstAndLastOrderDate[1]},
-            values: [${firstAndLastOrderDate[0]}, ${firstAndLastOrderDate[1]}],
-            create: function (event, ui) {
-            let from = new Date(${firstAndLastOrderDate[0]});
-            let to = new Date(${firstAndLastOrderDate[1]});
-            $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
-            $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
-            },
-            slide: function (event, ui) {
-            from = new Date(ui.values[0]);
-            to = new Date(ui.values[1]);
-            $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
-            $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
-            },
-            stop: function (event, ui) {
-            drawGraph(ui.values[0], ui.values[1]);
-            }
-    });
-    $("#from").change(manualDateChangeHandler);
-    $("#to").change(manualDateChangeHandler);
-    google.charts.load('current', {packages: ['bar']});
-    google.charts.setOnLoadCallback(drawGraph);
-    function manualDateChangeHandler() {
-    let from = new Date($("#from").val());
-    let to = new Date($("#to").val());
-    $("#slider-range").slider('values', 0, from.getTime());
-    $("#slider-range").slider('values', 1, to.getTime());
-    }
-
-    function drawGraph(from = null, to = null) {
-    var data = await fetch("${pageContext.request.contextPath}/toto/mvc/service/unitesVendues/CAcategories" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
-    return data.json();
-    }).then(json => {
-    json.unshift(['Catégories', "Chiffre d\'affaire", ]);
-    console.log(json);
-    return google.visualization.arrayToDataTable(json);
-    });
-    var options = {
-    colors: ['#b2967d'],
-            legend: {position: 'none'},
-            backgroundColor: {
-            fill: '#eee4e1',
-                    fillOpacity: 0.8
-            },
-            width: 1140,
-            height: 600
-    };
-    var chart = new google.charts.Bar(document.getElementById('donutchart'));
-    chart.draw(data, options);
-    data = await fetch("${pageContext.request.contextPath}/toto/mvc/service/unitesVendues/CApays" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
-    return data.json();
-    }).then(json => {
-    json.unshift(['Pays', "Chiffre d\'affaire", ]);
-    console.log(json);
-    return google.visualization.arrayToDataTable(json);
-    });
-    var chart = new google.charts.Bar(document.getElementById('donutchart1'));
-    chart.draw(data, options);
-    data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAclient" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
-    return data.json();
-    }).then(json => {
-    json.unshift(['Clients', "Chiffre d\'affaire", ]);
-    console.log(json);
-    return google.visualization.arrayToDataTable(json);
-    });
-    var chart = new google.charts.Bar(document.getElementById('donutchart2'));
-    chart.draw(data, options);
-    }
-</script>
 </html>

@@ -6,106 +6,129 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Edition du profil client</title>
-    </head>
-    <body>
-        <h1>Edition du profil client</h1>
-        
-        <table border='1'>
-		<tr><th>Code</th><th>Societe</th><th>Contact</th><th>Fonction</th><th>Adresse</th><th>Ville</th><th>Region</th><th>CodePostal</th><th>Pays</th><th>Telephone</th><th>Fax</th></tr>
-			<tr>
-				<td>${clients.code}</td>
-				<td>${mvc.encoders.html(clients.societe)}</td>
-				<td>${mvc.encoders.html(clients.contact)}</td>
-                                <td>${mvc.encoders.html(clients.fonction)}</td>
-                                <td>${mvc.encoders.html(clients.adresse)}</td>
-                                <td>${mvc.encoders.html(clients.ville)}</td>
-                                <td>${mvc.encoders.html(clients.region)}</td>
-                                <td>${mvc.encoders.html(clients.codepostal)}</td>
-                                <td>${mvc.encoders.html(clients.pays)}</td>
-                                <td>${mvc.encoders.html(clients.telephone)}</td>
-                                <td>${mvc.encoders.html(clients.fax)}</td>
-			</tr>
-	</table>
-        
-        <form method="POST"> <%-- L'action par défaut est de revenir à l'URL du contrôleur --%>
+<html lang="fr">
 
-            <input name="societe" placeholder="Société"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('societe')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-               
-            <input name="contact" placeholder="Contact"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('contact')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="fonction" placeholder="Fonction"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('fonction')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="adresse" placeholder="Adresse"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('adresse')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="ville" placeholder="Ville"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('ville')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="region" placeholder="Région"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('region')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-            
-            <input name="code_postal" placeholder="Code Postal"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('codepostal')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="pays" placeholder="Pays"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('pays')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="telephone" placeholder="Téléphone"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('telephone')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input name="fax" placeholder="Fax"><br>
-            <ul> <%-- On montre les erreurs de saisie éventuelles --%>
-                <c:forEach var="error" items="${validationErrors.getErrors('fax')}">
-                    <li><span style="color: red;">${mvc.encoders.html(error.message)}</span></li>
-                    </c:forEach>
-            </ul>
-                
-            <input type="submit" value="Modifier le profil">
-        </form>
-                
-        <a href="${pageContext.request.contextPath}/acceuil">Retour au menu</a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Marisol Canavy">
+        <title>Acceuil</title>
+        <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/4cd26dbae1.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body class="d-flex flex-column h-100">
+        <header>
+            <nav class="navbar navbar-expand-md navbar-light bgMr fixed-top">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/mvc/acceuil">Acceuil</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link " href="#">Créer un bon de commande</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Voir ses bons de commandes</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="editProfilClient">Voir mon compte</a>
+                        </li>
+                        <li>
+                            <a class="navbar-brand" href="${pageContext.request.contextPath}/mvc/authentification"><i class="fas fa-sign-out-alt"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="my-auto">
+            <div class="container">
+
+                <h1 class="mt-5">Edition de votre profil client</h1>
+                <h2 class="lead">Si vous souhaitiez modifier vos coordonnées, vous êtes au bon endroit! </h2>
+                <p class="lead"> Les changements se feront lors de votre reconnexion.</p>
+                <form method="POST">
+                    <div class="form__group field container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="input" class="form__field" name="societe" id='societe' value="${client.c.societe}" required />
+                                <label for="societe" class="form__label">Societe</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form__group field container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="input" class="form__field" name="fonction" id='fonction' value="${client.c.fonction}" required />
+                                <label for="fonction" class="form__label">Fonction</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form__group field container"> 
+                        <div class="row">
+                            <div class="col">
+                                <input type="input" class="form__field" name="adresse" id='adresse' value="${client.c.adresse}" required />
+                                <label for="adresse" class="form__label">Adresse</label>
+                            </div>
+                        </div>
+                    </div>            
+                    <div class="form__group field container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="input" class="form__field" name="adresse" id='adresse' value="${client.c.adresse}" required />
+                                <label for="adresse" class="form__label">Adresse</label>
+                            </div>
+                            <div class="col-2">
+                                <input type="input" class="form__field" name="codepostal" id='fonction' value="${client.c.codePostal}" required />
+                                <label for="codepostal" class="form__label">Code Postal</label>
+                            </div>
+                            <div class="col-2">
+                                <input type="input" class="form__field" name="ville" id='ville' value="${client.c.ville}" required />
+                                <label for="ville" class="form__label">Ville</label>
+                            </div>
+                            <div class="col">
+                                <input type="input" class="form__field" name="region" id='region' value="${client.c.region}" required />
+                                <label for="region" class="form__label">Region</label>
+                            </div>
+
+                            <div class="col">
+                                <input type="input" class="form__field" name="pays" id='pays' value="${client.c.pays}" required />
+                                <label for="pays" class="form__label">Pays</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form__group field container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="input" class="form__field" name="telephone" id='telephone' value="${client.c.telephone}" required />
+                                <label for="telephone" class="form__label">Telephone</label>
+                            </div>
+                            <div class="col">
+                                <input type="input" class="form__field" name="fax" id='fax' value="${client.c.fax}" required />
+                                <label for="fax" class="form__label">Fax</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mt-5"  style="margin: auto;">
+                        <input class="btn btn-lg btn-connexion btn-block" type="submit" placeholder="Mettre à jour">
+                    </div>
+                </form>
+
+            </div>
+        </main>
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+                <span class="text-muted">© Projet Technologies Web - Canavy Nourrisson Salvan</span>
+            </div>
+        </footer>
+
     </body>
 </html>

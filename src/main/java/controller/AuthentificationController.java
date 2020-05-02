@@ -48,39 +48,24 @@ public class AuthentificationController {
 
     @Inject // Les infos du joueur, Session scoped
     ClientConnecte client;
-
-//    @GET
-//    public String show() {
-//        models.put("client", dao.findAll());
-//        if (client.getCode() == null) { // Pas de code donc pas authentifier Partie client
-//            return "authentification.jsp";
-//        } //else { // Code donc authentifier Partie client
-//            //return "acceuil.jsp";
-//        //}
-//        return "acceuil.jsp";
-//    }
     
     @GET
      public void show() {
          models.put("client", dao.findAll());
     }
-//    @GET
-//    @Path("deconnecter")
-//    public String logout() {
-//        client.logout();
-//        return "redirect:/";
-//    }
+
 
     @POST
-    public String login(@FormParam("contact") String nom, @FormParam("motDePasse") String code) {
-        if (nom.equals("admin") && code.equals("mdp")) {
+    public String login(@FormParam("contact") String contact, @FormParam("motDePasse") String code) {
+        if (contact.equals("admin") && code.equals("mdp")) {
             models.put("errorMessage", "Tout est bon pour l'admin");
         } else {
             try {
                 Client p = dao.find(code);
                 if (p.getCode().equals(code)) {
-                    if (p.getContact().equals(nom)) {
-                        client.login(code,nom);
+                    if (p.getContact().equals(contact)) {
+                        client.setCode(code);
+                        client.login(p);
                         return "redirect:acceuil";
                     } else {
                         models.put("errorMessage", "Les informations de connexion sont érronnées.");
@@ -94,10 +79,5 @@ public class AuthentificationController {
         }
         return null;
     }
-//    
-//    @GET @Path("acceuil")
-//    public String getNom() {
-//        models.put("client", client.getCode());
-//        return null;
-//    }
+    
 }
