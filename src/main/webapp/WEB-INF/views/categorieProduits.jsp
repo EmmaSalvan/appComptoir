@@ -47,6 +47,9 @@
 						       <c:if test="${produit.indisponible eq 0}">checked</c:if>
 						>
 					</td>
+                                        <td><c:choose><c:when test="${produit.indisponible eq 1}"><span class="error">Produit Indisponible</span></c:when><c:otherwise><form method="POST" action=""><input type="hidden" name="produit" value="${produit.reference}"><label>Quantité </label><input type="quantite" class="number-input" min="1" name="quantite"><input type="submit" class="primary-button" value="Ajouter au panier"></form></c:otherwise></c:choose>
+                                        <c:if test="${produit.indisponible eq 1}">red</c:if>
+                                        </td>
 				</tr>
 			</c:forEach>
 		</table>

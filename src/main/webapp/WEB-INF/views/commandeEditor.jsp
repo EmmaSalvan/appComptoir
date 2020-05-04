@@ -1,4 +1,4 @@
-<%-- 
+ <%-- 
     Document   : commandeEditor
     Created on : 14 févr. 2020, 17:02:51
     Author     : Marie
@@ -10,60 +10,19 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Produits dans la catégorie '${selected.libelle}'</title>
-	</head>
+ <body>
+   	<h1>Votre panier</h1>
 
-	<body>
-		<h3>Choisissez la catégorie à afficher</h3>
-		<form> 	<%-- L'action par défaut est de revenir à l'URL du contrôleur --%>
-			<%-- Une liste de choix pour le paramètre 'code' --%>
-			<select name='code' onchange='this.form.submit()'>
-				<%-- On parcourt la liste des catégories en mettant une option pour chaque catégorie --%>
-				<c:forEach var="categorie" items="${categories}">
-					<%-- la valeur de l'option c'est le code de la catégorie --%>
-					<option value='${categorie.code}' 
-						<%--On détermine quelle et l'option sélectionnée dans la liste --%>
-						<c:if test="${categorie.code eq selected.code}">
-							selected
-						</c:if>
-					> <%-- le texte affiché pour l'opton c'est le libellé de la catégorie --%>
-						${categorie.libelle}
-					</option>
-				</c:forEach>
-			</select>
-			<input type='submit'>
-		</form>
-                <form>               
-		<h2>Produits dans la catégorie '${selected.libelle}'</h2>
-		<%-- On montre la liste des produits dans la catégorie sélectionnée sous la forme d'une table HTML --%>		
-		<table border='1'>
-			<tr><th>Référence</th><th>Nom</th><th>Disponible ?</th></tr>
-			<%-- Est-ce qu'il y a des produits dans la catégorie sélectionnée ? --%>
-			<c:if test="${empty selected.produitCollection}">
-				<tr><td colspan="3">aucun produit dans cette catégorie</td></tr>	
-			</c:if>
-			<%-- Une ligne dans la table pour chaque produit --%>				
-			<c:forEach var="produit" items="${selected.produitCollection}">
-				<tr>
-					<td>${produit.reference}</td>
-					<td>${produit.nom}</td>
-					<td>
-						<input type="checkbox"
-						       <c:if test="${produit.indisponible eq 0}">checked</c:if>
-						>
-					</td>
-                                        <td>${produit.prix}</td>
-                                        <td>Quantité:  <input name="Quantité" type="number" min="0.00" max="20.00" step="1" /></td>
-             
-				</tr>
-			</c:forEach>
-		</table>
-		<hr>
-                <input type='submit' value="commander">
-                 </form>   
-		<a href="${pageContext.request.contextPath}/">Retour au menu</a>
-	<hr>
+		<c:forEach var="ligne" items="${panier.lignesCommande}">
+			<div class="productLine">
+				<div>${ligne.produit.reference}</div>
+				<div>${ligne.produit.nom}</div>
+				<div><form method="POST" action=""><input type="hidden" name="action" value="${ligne.produit.reference}"><input type="hidden" name="produit" value="${ligne.produit.reference}"><input type="hidden" name="produit" value="${ligne.produit.reference}"><label>Quantité </label><input type="number" class="number-input" value="${ligne.quantite}" name="quantite"><input type="submit" class="primary-button" name="choix" value="Modifier la quantite du produit"></form></div>
+				<div><form method="POST" action=""><input type="hidden" name="produitsupp" value="${ligne.produit.reference}"><input type="submit" class="cancel-button" name="choix" value="Supprimer le produit du panier"></form></div>
+			</div>
+		</c:forEach>
+		<form method="POST" action=""><input type="hidden" name="valider" value="1"><input type="submit" class="primary-button" name="choix" value="Valider le panier"></form>
+		<span class="error">${erreur}</span>
+	</div>
     </body>
 </html>

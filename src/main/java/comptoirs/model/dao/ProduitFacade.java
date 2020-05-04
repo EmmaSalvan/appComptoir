@@ -9,6 +9,8 @@ import comptoirs.model.entity.Produit;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
+
 
 /**
  *
@@ -28,5 +30,12 @@ public class ProduitFacade extends AbstractFacade<Produit> {
 	public ProduitFacade() {
 		super(Produit.class);
 	}
-	
+
+        public Produit findByReference(Integer ref){
+            List<Produit> liste = em.createNamedQuery("Produit.findByReference").setParameter("reference", ref).getResultList();
+            if(!liste.isEmpty())
+                return (Produit) liste.get(0);
+            return null;
+        }
+        	
 }
