@@ -7,14 +7,20 @@ package controller;
 
 import comptoirs.model.dao.ClientFacade;
 import comptoirs.model.entity.Client;
+import comptoirs.model.entity.Commande;
+import comptoirs.model.entity.ClientConnecte;
+import javax.persistence.EntityManager;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.validation.executable.ExecutableType;
+import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-
+import java.util.Collection;
 /**
  *
  * @author M_Can
@@ -24,16 +30,23 @@ import javax.ws.rs.QueryParam;
 @Path("commandes")
 @View("commandes.jsp")
 public class ClientCommandeController {
-    @Inject
-    ClientFacade facade;
     
+    @Inject
+    ClientFacade dao;
+
     @Inject
     Models models;
+
+    @Inject // Les infos du joueur, Session scoped
+    ClientConnecte client;
+
     
     @GET
-    public void afficheCommandesClient(@QueryParam("code") String codeClient){
-        Client c = facade.find(codeClient);
-        models.put("client", c);
-}
-    
+    public void afficheCommandesPourLeClient() {
+    Client c = dao.find(client.getCode()); 
+    models.put("clientCo", c);
+    Collection<Commande> mesCommandes = c.getCommandeCollection();
+    models.put("mesCommandes", mesCommandes);
+ }
+
 }

@@ -35,7 +35,7 @@
                             <a class="nav-link " href="#">Créer un bon de commande</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Voir ses bons de commandes</a>
+                            <a class="nav-link" href="commandes">Voir ses bons de commandes</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ">
@@ -56,13 +56,13 @@
                     <p class="lead">A partir de cette page, vous pouvez :</p>
                     <ul class="liste">
                         <li>
-                            <a class="r" href="#">Consulter vos bons de commandes</a>
+                            <a class="r" href="">Créer un bon de commmande</a>
                         </li>
                         <li>
-                            <a class="r" href="#">Créer un bon de commande</a>
+                            <a class="r" href="commandes">Consulter vos bons de commandes</a>
                         </li>
                         <li>
-                            <a class="r" href="mvc/editProfilClient">Acceder à votre profil</a>
+                            <a class="r" href="editProfilClient">Acceder à votre profil</a>
                         </li>
                     </ul>
                     <p class="lead mt-4">Bon shopping !</p>
