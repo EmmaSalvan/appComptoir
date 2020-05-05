@@ -5,25 +5,13 @@
  */
 package controller;
 
-import comptoirs.model.dao.CategorieFacade;
 import comptoirs.model.dao.ClientFacade;
-import comptoirs.model.entity.Categorie;
 import comptoirs.model.entity.Client;
 import comptoirs.model.entity.ClientConnecte;
-import java.io.IOException;
-import java.util.List;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.executable.ExecutableType;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

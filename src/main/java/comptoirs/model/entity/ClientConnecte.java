@@ -10,6 +10,7 @@ package comptoirs.model.entity;
  * @author marisolcanavy
  */
 import java.io.Serializable;
+import java.util.Collection;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -20,7 +21,7 @@ import javax.inject.Named;
 public class ClientConnecte extends Client implements Serializable {
 
     private Client c;
-
+    
     public void login(Client c) {
         this.c = c;
     }

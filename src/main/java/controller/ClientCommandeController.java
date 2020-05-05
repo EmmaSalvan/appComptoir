@@ -9,17 +9,13 @@ import comptoirs.model.dao.ClientFacade;
 import comptoirs.model.entity.Client;
 import comptoirs.model.entity.Commande;
 import comptoirs.model.entity.ClientConnecte;
-import javax.persistence.EntityManager;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.validation.executable.ExecutableType;
-import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 import java.util.Collection;
 /**
  *
@@ -31,7 +27,7 @@ import java.util.Collection;
 @View("commandes.jsp")
 public class ClientCommandeController {
     
-    @Inject
+    @Inject //recupère les infos de la db
     ClientFacade dao;
 
     @Inject
@@ -40,13 +36,9 @@ public class ClientCommandeController {
     @Inject // Les infos du joueur, Session scoped
     ClientConnecte client;
 
-    
     @GET
-    public void afficheCommandesPourLeClient() {
-    Client c = dao.find(client.getCode()); 
-    models.put("clientCo", c);
-    Collection<Commande> mesCommandes = c.getCommandeCollection();
-    models.put("mesCommandes", mesCommandes);
- }
+    public void show() {
+        models.put("client", dao.find(client.getCode()));
+    }
 
 }

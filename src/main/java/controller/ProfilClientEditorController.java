@@ -8,22 +8,16 @@ package controller;
 import comptoirs.model.dao.ClientFacade;
 import comptoirs.model.entity.Client;
 import comptoirs.model.entity.ClientConnecte;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.View;
-import javax.mvc.binding.BindingResult;
-import javax.validation.Valid;
 import javax.validation.executable.ExecutableType;
 import javax.validation.executable.ValidateOnExecution;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.BeanParam;
 
 /**
  *
@@ -52,7 +46,7 @@ public class ProfilClientEditorController {
     @POST
     @ValidateOnExecution(type = ExecutableType.ALL)	
     public void editProfil(@FormParam("societe") String societe, @FormParam("fonction") String fonction, @FormParam("adresse") String adresse, @FormParam("ville") String ville, @FormParam("region") String region, @FormParam("codepostal") String codePostal, @FormParam("pays") String pays, @FormParam("telephone") String telephone, @FormParam("fax") String fax) {
-        models.put("changement", "Voici le changement de societe souhaité :" + societe + "et" + fonction+ "et" + adresse+ "et" + ville+ "et" + codePostal+ "et" + region+ "et" + pays+ "et" + telephone+ "et" + fax);
+        //models.put("changement", "Voici le changement de societe souhaité :" + societe + "et" + fonction+ "et" + adresse+ "et" + ville+ "et" + codePostal+ "et" + region+ "et" + pays+ "et" + telephone+ "et" + fax);
        
         Client profilConnecte = dao.find(client.getCode());
         

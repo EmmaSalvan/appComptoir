@@ -26,44 +26,9 @@
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-            console.log(5 + 6);
-            $("#slider-range").slider({
-            range: true,
-                    min: ${firstAndLastOrderDate[0]},
-                    max: ${firstAndLastOrderDate[1]},
-                    values: [${firstAndLastOrderDate[0]}, ${firstAndLastOrderDate[1]}],
-                    create: function (event, ui) {
-                    let from = new Date(${firstAndLastOrderDate[0]});
-                    let to = new Date(${firstAndLastOrderDate[1]});
-                    $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
-                    $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
-                    },
-                    slide: function (event, ui) {
-                    from = new Date(ui.values[0]);
-                    to = new Date(ui.values[1]);
-                    $("#from").val(from.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + from.getDate()).slice( - 2));
-                    $("#to").val(to.getFullYear() + "-" + ("0" + (from.getMonth() + 1)).slice( - 2) + "-" + ("0" + to.getDate()).slice( - 2));
-                    },
-                    stop: function (event, ui) {
-                    drawGraph(ui.values[0], ui.values[1]);
-                    }
-            });
-            
-            $("#from").change(manualDateChangeHandler);
-            $("#to").change(manualDateChangeHandler);
-            google.charts.load('current', {packages: ['bar']});
-            google.charts.setOnLoadCallback(drawGraph);
-            function manualDateChangeHandler() {
-            let from = new Date($("#from").val());
-            let to = new Date($("#to").val());
-            $("#slider-range").slider('values', 0, from.getTime());
-            $("#slider-range").slider('values', 1, to.getTime());
-            }
-
-            function drawGraph(from = null, to = null) {
-                
-                //methoàde Lucas
-            var data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAcategories" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            function drawGraph() {
+           
+            var data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAcategories").then(data => {
             return data.json();
             }).then(json => {
             json.unshift(['Catégories', "Chiffre d\'affaire", ]);
@@ -84,7 +49,7 @@
             chart.draw(data, options);
            
             //suite
-            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CApays" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CApays").then(data => {
             return data.json();
             }).then(json => {
             json.unshift(['Pays', "Chiffre d\'affaire", ]);
@@ -93,7 +58,7 @@
             });
             var chart = new google.charts.Bar(document.getElementById('donutchart1'));
             chart.draw(data, options);
-            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAclient" + (from == null ? "" : "from=" + from + "&") + (to == null ? "" : "to=" + to)).then(data => {
+            data = await fetch("${pageContext.request.contextPath}/mvc/service/unitesVendues/CAclient").then(data => {
             return data.json();
             }).then(json => {
             json.unshift(['Clients', "Chiffre d\'affaire", ]);

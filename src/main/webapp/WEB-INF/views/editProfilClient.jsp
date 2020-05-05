@@ -7,6 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="fr">
 
     <head>
@@ -122,20 +123,8 @@
                         <input class="btn btn-lg btn-connexion btn-block" type="submit" placeholder="Mettre à jour">
                     </div>
                 </form>
-
             </div>
-            <h1>Commandes pour le client ${client.c.societe}</h1>
-<table border='1'>
-  <tr><th>Numéro</th><th>Saisie le</th><th>Nombre d'articles</th></tr>
-  <%-- Pour chaque commande, une ligne dans la table HTML --%>
-  <c:forEach var="commande" items="${client.c.commandeCollection}">
-      <tr>
-          <td>${commande.numero}</td>
-          <td><fmt:formatDate value="${commande.saisieLe}" pattern="dd/MM/yyyy" /></td>
-          <td>${commande.ligneCollection.size()}</td>
-      </tr>
-    </c:forEach>
-</table>
+
         </main>
         <footer class="footer mt-auto py-3">
             <div class="container">
