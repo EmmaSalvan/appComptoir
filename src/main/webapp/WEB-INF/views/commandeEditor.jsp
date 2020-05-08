@@ -12,17 +12,18 @@
 
  <body>
    	<h1>Votre panier</h1>
-
-		<c:forEach var="ligne" items="${panier.lignesCommande}">
-			<div class="productLine">
-				<div>${ligne.produit.reference}</div>
-				<div>${ligne.produit.nom}</div>
-				<div><form method="POST" action=""><input type="hidden" name="action" value="${ligne.produit.reference}"><input type="hidden" name="produit" value="${ligne.produit.reference}"><input type="hidden" name="produit" value="${ligne.produit.reference}"><label>Quantité </label><input type="number" class="number-input" value="${ligne.quantite}" name="quantite"><input type="submit" class="primary-button" name="choix" value="Modifier la quantite du produit"></form></div>
-				<div><form method="POST" action=""><input type="hidden" name="produitsupp" value="${ligne.produit.reference}"><input type="submit" class="cancel-button" name="choix" value="Supprimer le produit du panier"></form></div>
-			</div>
-		</c:forEach>
-		<form method="POST" action=""><input type="hidden" name="valider" value="1"><input type="submit" class="primary-button" name="choix" value="Valider le panier"></form>
-		<span class="error">${erreur}</span>
+		<c:forEach var="ligne" items="${boncommande.lignesCommandes}">
+                    <table border='1'> <tr><th>Référence</th><th>Nom</th><th>Quantité</th><th></th></tr>
+                        <tr>
+                                <td>${ligne.produit.reference}</td>
+				<td>${ligne.produit.nom}</td>
+				<td><form><input name="produit" type="hidden" value="${ligne.produit.reference}"><input name="produit" type="hidden" value="${ligne.produit.reference}"><input type="number" min='1' value="${ligne.quantite}" name="quantite"><input type="submit" name="action" value="Modifier la quantite"></form></td>
+				<td><form><input name="produitsupp" type="hidden" value="${ligne.produit.reference}"><input type="submit" name="action" value="Supprimer"></form></td>
+                        </tr>
+                    </table>
+                </c:forEach>
+		<form method="POST" action=""><input type="hidden" name="valider" value="1"><input type="submit" name="action" value="Valider le panier"></form><br/>
+                <a href="acceuil">Retour au menu</a>
 	</div>
     </body>
 </html>

@@ -32,7 +32,7 @@
 		<h2>Produits dans la catégorie '${selected.libelle}'</h2>
 		<%-- On montre la liste des produits dans la catégorie sélectionnée sous la forme d'une table HTML --%>		
 		<table border='1'>
-			<tr><th>Référence</th><th>Nom</th><th>Disponible ?</th></tr>
+			<tr><th>Référence</th><th>Nom</th><th>Disponible ?</th><th>Ajouter au panier</th></tr>
 			<%-- Est-ce qu'il y a des produits dans la catégorie sélectionnée ? --%>
 			<c:if test="${empty selected.produitCollection}">
 				<tr><td colspan="3">aucun produit dans cette catégorie</td></tr>	
@@ -47,14 +47,15 @@
 						       <c:if test="${produit.indisponible eq 0}">checked</c:if>
 						>
 					</td>
-                                        <td><c:choose><c:when test="${produit.indisponible eq 1}"><span class="error">Produit Indisponible</span></c:when><c:otherwise><form method="POST" action=""><input type="hidden" name="produit" value="${produit.reference}"><label>Quantité </label><input type="quantite" class="number-input" min="1" name="quantite"><input type="submit" class="primary-button" value="Ajouter au panier"></form></c:otherwise></c:choose>
-                                        <c:if test="${produit.indisponible eq 1}">red</c:if>
+                                        <td><c:choose><c:when test="${produit.indisponible eq 1}"><span class="error">Produit Indisponible</span></c:when><c:otherwise><form method="POST" action=""><input type="hidden" name="produit" value="${produit.reference}"><label>Quantité </label><input type=number class="number-input" min="1" name="quantite"><input type="submit" class="primary-button" value="+"></form></c:otherwise></c:choose>
+                                        <c:if test="${produit.indisponible eq 1}"></c:if>
                                         </td>
 				</tr>
 			</c:forEach>
 		</table>
 		<hr>
-		<a href="${pageContext.request.contextPath}/">Retour au menu</a>
+                <a href="commandeEditor">Voir le panier</a><br/>
+                <a href="acceuil">Retour au menu</a>
 	<hr>
 	<h3>Code source</h3>
 	<ul>
