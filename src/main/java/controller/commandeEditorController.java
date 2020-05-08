@@ -24,10 +24,11 @@ import javax.mvc.Controller;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.FormParam;
 import javax.mvc.Models;
-import javax.enterprise.context.SessionScoped;
 import javax.ws.rs.core.Response;
 
 import comptoirs.model.entity.ClientConnecte;
+import javax.enterprise.context.SessionScoped;
+
 
 /**
 *
@@ -40,47 +41,58 @@ import comptoirs.model.entity.ClientConnecte;
 
 public class commandeEditorController {
 
-        @Inject
-	Models model;
+        @Inject // Les infos du joueur, Session scoped
+        ClientConnecte client;
 	
-	@Inject
+	@Inject // Le Panier, Session scoped
 	BonCommande boncommande;
         
         @Inject
         ProduitFacade facadeP;
         
-        @Inject // Les infos du joueur, Session scoped
-        private ClientConnecte client;
+        @Inject
+        Models model;
 
+        // Affichage des produits placés dans le panier
         @GET
-            public void show(){
+        public void show(){
                 model.put("boncommande", boncommande);
         }
 
+        // Post pour réaliser différentes actions dans le panier
         @POST
-        public Response choix( @FormParam("action") String action,
-                               @FormParam("produit") Integer numeroProduit,
-                               @FormParam("quantite") short quantite,
-                               @FormParam("produitsupp") Integer numeroProduitSupp){
+        private void choix(@FormParam("action") String action,
+                     @FormParam("produit") Integer numeroProduit,
+                     @FormParam("quantite") short newquantite,
+                     @FormParam("produitsupp") Integer numeroProduitSupp){
 
                 switch(action){
-                    case "Valider le panier":
-                        return validerLePanier();
-                    case "Supprimer le produit du panier":
-                        return supprimerProduit(numeroProduitSupp);
-                    case "Modifier la quantite du produit":
-                        return modifierQuantite(numeroProduit, quantite);
-                }
-            return Response.ok().build();
-        }
 
+                    case "Valider le panier": 
+                        validerLePanier();
+                        break;
+
+
+                    case "Supprimer le produit du panier": 
+                        supprimerProduit(numeroProduitSupp);
+                        break;
+
+                    case "Modifier la quantite du produit": 
+                        modifierQuantite(numeroProduit, newquantite);
+                        break;
+                          
+           }     
+}
+       @POST
         //Dans le cas où l'utilisateur valide le panier
-        private Response validerLePanier(){
-           return Response.seeOther(URI.create("/Comptoirs_MVC/app/ValidationCommande")).build();
+        public String validerLePanier(){
+        // On envoie sur la page de validation de la commande
+           return("redirect:validationCommande");
         }
 
+        @POST
         // Dans le cas où l'utilisateur veut supprimer un produit du panier
-        private Response supprimerProduit(Integer numeroProduitSupp){
+        private String supprimerProduit(Integer numeroProduitSupp){
             Produit p = facadeP.findByReference(numeroProduitSupp);
                 for(LigneCommande ligne : boncommande.getLignesCommandes()){
                     if(ligne.getProduit().getReference().equals(p.getReference())){
@@ -88,20 +100,23 @@ public class commandeEditorController {
                     }       
                 }
             model.put("boncommande", boncommande);
-                return Response.ok().build();
+            // On met à jour le panier
+            return("redirect:commandeEditor");
         }
-
+        
+        @POST
         //Dans le cas où l'utilisateur veut modifier la quantite du produit
-        private Response modifierQuantite(Integer numeroProduit, short quantite){
+        private String modifierQuantite(Integer numeroProduit, short newquantite){
             Produit p = facadeP.findByReference(numeroProduit);
-                if (p.getUnitesEnStock() >= quantite){
+                if (p.getUnitesEnStock() >= newquantite){
                     for (LigneCommande ligne : boncommande.getLignesCommandes()){
                         if(ligne.getProduit().getReference().equals(p.getReference())){
-                                ligne.setQuantite(quantite);
+                                ligne.setQuantite((short)(newquantite));
                         }                           
                     }
                 }
             model.put("boncommande", boncommande);
-            return Response.ok().build();
+            // On met à jour le panier
+            return("redirect:commandeEditor");
         }
 }

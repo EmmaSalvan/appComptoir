@@ -54,22 +54,20 @@ public class validationCommandeController {
 	
 	LigneFacade facadeL;
 	
-	@Inject
+	@Inject // Le panier, Session scoped
 	BonCommande boncommande;
 
         @Inject // Les infos du joueur, Session scoped
-        private ClientConnecte client;
-
-
+        ClientConnecte client;
+ 
         @GET
-        public Response show(){
-            Client c = dao.find(client.getCode());
-            model.put("client", c);
-            return Response.ok().build();
+        public void show() {
+        model.put("boncommande", boncommande);
         }
-        
+
+
         @POST
-        public Response validationCommande(
+        public void validationCommande(
                 @FormParam("destinataire") String destinataire,
                 @FormParam("adresse") String adresse,
                 @FormParam("codePostal") String codePostal,
@@ -78,9 +76,12 @@ public class validationCommandeController {
                 @FormParam("pays") String pays){
 
                 Commande commande = new Commande();
-                Client c = dao.find(client.getCode());
+                for (LigneCommande ligne : boncommande.getLignesCommandes()) {
+                Ligne newLigne = new Ligne(commande.getNumero(), ligne.getProduit().getReference());
+                newLigne.setQuantite(ligne.getQuantite());
+            }
 
-                commande.setClient(c);
+                commande.setClient(client);
                 commande.setDestinataire(destinataire);
                 commande.setAdresseLivraison(adresse);
                 commande.setCodePostalLivrais(codePostal);
@@ -88,19 +89,9 @@ public class validationCommandeController {
                 commande.setRegionLivraison(region);
                 commande.setPaysLivraison(pays);
                 commande.setSaisieLe(new Date());
-      
 
-                facadeC.create(commande);
-                LinkedList<Ligne> lignes = new LinkedList<Ligne>();
-                for (LigneCommande ligne : boncommande.getLignesCommandes()) {
-                Ligne newLigne = new Ligne(commande.getNumero(), ligne.getProduit().getReference());
-                newLigne.setQuantite(ligne.getQuantite());
-		facadeL.create(newLigne);
-		lignes.add(newLigne);
+                model.put("commande", commande);
+      
             }
-			commande.setLigneCollection(lignes);
-			facadeC.edit(commande);
-			return Response.seeOther(URI.create("/Comptoirs_MVC/app/acceuil")).build();
         }
-}
   
