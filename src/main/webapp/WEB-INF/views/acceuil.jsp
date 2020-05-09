@@ -32,10 +32,13 @@
                 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link " href="#">Créer un bon de commande</a>
+                            <a class="nav-link" href="commandes">Voir ses bons de commandes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="commandes">Voir ses bons de commandes</a>
+                            <a class="nav-link" href="categorieProduits">Voir les produits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="commandeEditor">Mon panier</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ">
