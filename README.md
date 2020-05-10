@@ -23,8 +23,8 @@ Il doit pouvoir également voir l’historique de ses commandes et pouvoir modif
 
 * L'administrateur s'authentifie en utilisant un login / password prédéfini (admin/mdp). 
 Une fois authentifié, l'administrateur a accès à une série de tableaux de bord graphiques qui lui permettent de visualiser des statistiques sur les commandes saisies :
---Visualiser les chiffres d'affaire par catégorie d'article.
---Visualiser les chiffres d'affaire par zone géographique.
+--Visualiser les chiffres d'affaire par catégorie d'article.                                       
+--Visualiser les chiffres d'affaire par zone géographique.                               
 --Visualiser les chiffres d'affaire par client.
 Une des prochaines modifications de l'application sera de pouvoir choisir la période (date de début / date de fin) sur laquelle doit porter la statistique.
 Pour l'affichage des graphiques, nous avons utilisé la charte graphique GoogleChart en JavaScript.
