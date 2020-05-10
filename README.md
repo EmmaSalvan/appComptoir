@@ -22,7 +22,7 @@ Une fois authentifié, l'application doit permettre au client l'édition de ses 
 Il doit pouvoir également voir l’historique de ses commandes et pouvoir modifier ses informations personnelles via l’onglet « Mon Compte »
 
 * L'administrateur s'authentifie en utilisant un login / password prédéfini (admin/mdp). 
-Une fois authentifié, l'administrateur a accès à une série de tableaux de bord graphiques qui lui permettent de visualiser des statistiques sur les commandes saisies :
+Une fois authentifié, l'administrateur a accès à une série de tableaux de bord graphiques qui lui permettent de visualiser des statistiques sur les commandes saisies :                             
 --Visualiser les chiffres d'affaire par catégorie d'article.                                       
 --Visualiser les chiffres d'affaire par zone géographique.                               
 --Visualiser les chiffres d'affaire par client.
