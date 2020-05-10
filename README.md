@@ -2,7 +2,7 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
-RoseMarket Application
+RoseMarket Application                                           
 On se propose de réaliser une application web J2EE, en respectant au mieux l'architecture MVC (DAO, JSP).
 On utilise la base de données « comptoirs » fournie sur Moodle.
 Schéma de la base de données : les clients passent des commandes, les commandes référencent des produits, les produits appartiennent a des catégories. 
