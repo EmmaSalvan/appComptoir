@@ -39,7 +39,7 @@ Vous pouvez cloner le projet sur l'IDE et le lancer.
 
 Projet réalisé par : 
 * **Marisol CANAVY** _alias_ [@MarisolCanavy](https://github.com/MarisolCanavy)
-* **Marie NOURRISSON** _alias_ [@Marienrs](https://github.com/Marienrs)
+* **Marie NOURRISSON** _alias_ [@marienourrisson](https://github.com/marienourrisson)
 * **Emma SALVAN** _alias_ [@EmmaSalvan](https://github.com/EmmaSalvan)
 
 
